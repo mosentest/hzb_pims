@@ -1,34 +1,42 @@
 package com.hzb.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Choice;
 import java.awt.FlowLayout;
+import java.awt.Label;
+import java.awt.TextArea;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.hzb.bean.Depart;
 import com.hzb.bean.Staff;
+import com.hzb.dao.DepartDao;
 import com.hzb.dao.StaffDao;
 import com.hzb.util.ConstantUtil;
 
-import java.awt.Button;
-import java.awt.Label;
-import java.awt.TextField;
-import java.awt.TextArea;
-import java.awt.Choice;
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.Set;
-
-public class UpdateStaffUI extends JDialog {
+public class UpdateStaffDialog extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private StaffDao dao = new StaffDao();
+	private DepartDao departDao = new DepartDao();
 	private String staffId;
+	private Choice sexChoice;
+	private Choice eduChoice;
 	/**
 	 * Create the dialog.
 	 */
-	public UpdateStaffUI(String title,String staffId) {
+	public UpdateStaffDialog(String title,String staffId) {
 		this.staffId = staffId;
 		Staff findOne = dao.findOne(staffId);
 		getContentPane().setName(title);
@@ -116,37 +124,48 @@ public class UpdateStaffUI extends JDialog {
 		choice_1.setBounds(98, 184, 145, 21);
 		contentPanel.add(choice_1);
 		
-		Choice sexChoice = new Choice();
+		sexChoice = new Choice();
 		sexChoice.setBounds(98, 68, 103, 21);
-		Set<Entry<Integer, String>> sexEntrySet = ConstantUtil.sexMap.entrySet();
-		Iterator<Entry<Integer, String>> sexIterator = sexEntrySet.iterator();
+		Set<Entry<String,Integer>> sexEntrySet = ConstantUtil.sexMap.entrySet();
+		Iterator<Entry<String,Integer>> sexIterator = sexEntrySet.iterator();
 		while(sexIterator.hasNext()){
-			sexChoice.add(sexIterator.next().getValue());
+			sexChoice.add(sexIterator.next().getKey());
 		}
 		//需要加1
 		sexChoice.select(findOne.getSex() + 1);
 		contentPanel.add(sexChoice);
 		
-		Choice eduChoice = new Choice();
+		eduChoice = new Choice();
 		eduChoice.setBounds(98, 97, 145, 21);
-		Set<Entry<Integer, String>> eduEntrySet = ConstantUtil.eduMap.entrySet();
-		Iterator<Entry<Integer, String>> eduIterator = eduEntrySet.iterator();
+		Set<Entry<String,Integer>> eduEntrySet = ConstantUtil.eduMap.entrySet();
+		Iterator<Entry<String,Integer>> eduIterator = eduEntrySet.iterator();
 		while(eduIterator.hasNext()){
-			eduChoice.add(eduIterator.next().getValue());
+			eduChoice.add(eduIterator.next().getKey());
 		}
 		//需要加1
 		eduChoice.select(findOne.getEducation() + 1);
 		contentPanel.add(eduChoice);
 		
-		Choice choice_4 = new Choice();
-		choice_4.setBounds(98, 126, 145, 21);
-		contentPanel.add(choice_4);
+		Choice departChoice = new Choice();
+		departChoice.setBounds(98, 126, 145, 21);
+		List<Depart> findAll = departDao.findAll();
+		contentPanel.add(departChoice);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				Button button = new Button("确认");
+				button.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						String selectedItem = sexChoice.getSelectedItem();
+						System.out.println(selectedItem);
+//						ConstantUtil.sexMap.
+					}
+				});
 				buttonPane.add(button);
 			}
 			{
