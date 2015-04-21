@@ -60,7 +60,8 @@ public class DepartDao implements BaseDao<Depart> {
 			prepareStatement = connetion.prepareStatement(sql.toString());
 			prepareStatement.setString(1, entity.getDepartId());
 			prepareStatement.setString(2, entity.getDepartName());
-			prepareStatement.setInt(3, entity.getId());
+			prepareStatement.setInt(3, entity.getIsDel());
+			prepareStatement.setInt(4, entity.getId());
 			result = prepareStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

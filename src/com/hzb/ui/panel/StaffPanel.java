@@ -23,6 +23,11 @@ import com.hzb.ui.UpdateStaffDialog;
 import com.hzb.ui.model.StaffTableModel;
 import com.hzb.util.ConstantUtil;
 
+/**
+ * 
+ * 员工面板
+ *
+ */
 public class StaffPanel extends JPanel {
 	
 	private static  StaffDao staffDao = new StaffDao();

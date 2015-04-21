@@ -139,7 +139,7 @@ public class CourseDao implements BaseDao<Course> {
 
 	@Override
 	public Course findOne(int id) {
-		String sql ="SELECT * FROM tb_course WHERE id=? AND WHERE is_del=0";
+		String sql ="SELECT * FROM tb_course WHERE id=? AND is_del=0";
 		Connection connetion = DBUtil.getConnetion();
 		Course course = null;
 		PreparedStatement prepareStatement = null;
@@ -148,6 +148,46 @@ public class CourseDao implements BaseDao<Course> {
 			prepareStatement.setInt(id, 1);
 			ResultSet executeQuery = prepareStatement.executeQuery();
 			if(executeQuery.next()){
+				String courseId = executeQuery.getString(2);
+				String name = executeQuery.getString(3);
+				String hours = executeQuery.getString(4);
+				String credit = executeQuery.getString(5);
+				String nature = executeQuery.getString(6);
+				int isDel = executeQuery.getInt(7);
+				course = new Course(id, courseId, name, hours, credit, nature, isDel);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if(prepareStatement != null){
+				try {
+					prepareStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(connetion != null){
+				try {
+					connetion.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return course;
+	}
+	
+	public Course findOne(String  scourseId) {
+		String sql ="SELECT * FROM tb_course WHERE course_id=? AND  is_del=0 ";
+		Connection connetion = DBUtil.getConnetion();
+		Course course = null;
+		PreparedStatement prepareStatement = null;
+		try {
+			prepareStatement = connetion.prepareStatement(sql);
+			prepareStatement.setString(1, scourseId);
+			ResultSet executeQuery = prepareStatement.executeQuery();
+			if(executeQuery.next()){
+				int id = executeQuery.getInt(1);
 				String courseId = executeQuery.getString(2);
 				String name = executeQuery.getString(3);
 				String hours = executeQuery.getString(4);

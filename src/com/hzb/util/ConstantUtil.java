@@ -80,4 +80,15 @@ public class ConstantUtil {
 		}
 		return value;
 	}
+
+	/**
+	 * 检验是否是大于0的数字，并小于200
+	 * 
+	 * @param num
+	 */
+	public static boolean checkNum(String num) {
+		boolean isNum = num.matches("^[0-1]?[1-9][0-9]?$");
+		return isNum;
+	}
+	
 }

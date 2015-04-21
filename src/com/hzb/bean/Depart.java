@@ -16,18 +16,18 @@ public class Depart extends BaseBean{
 
 	private String departId;
 	private String departName;
-	private int idDel;
+	private int isDel;
 
 	public Depart() {
 		super();
 	}
 
-	public Depart(int id,String departId, String departName, int idDel) {
+	public Depart(int id,String departId, String departName, int isDel) {
 		super();
 		this.id=id;
 		this.departId = departId;
 		this.departName = departName;
-		this.idDel = idDel;
+		this.isDel = isDel;
 	}
 
 	public String getDepartId() {
@@ -46,12 +46,12 @@ public class Depart extends BaseBean{
 		this.departName = departName;
 	}
 
-	public int getIdDel() {
-		return idDel;
+	public int getIsDel() {
+		return isDel;
 	}
 
-	public void setIdDel(int idDel) {
-		this.idDel = idDel;
+	public void setIsDel(int idDel) {
+		this.isDel = idDel;
 	}
 
 	@Override
@@ -61,8 +61,8 @@ public class Depart extends BaseBean{
 		builder.append(departId);
 		builder.append(", departName=");
 		builder.append(departName);
-		builder.append(", idDel=");
-		builder.append(idDel);
+		builder.append(", isDel=");
+		builder.append(isDel);
 		builder.append("]");
 		return builder.toString();
 	}

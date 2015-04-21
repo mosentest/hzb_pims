@@ -135,7 +135,7 @@ public class ResearchDao implements BaseDao<Research> {
 //		String sql2 = "SELECT * FROM tb_research WHERE is_del=0";
 		StringBuffer sql = new StringBuffer();
 		List<String> params = new ArrayList<String>();
-		sql.append("SELECT * FROM tb_research WHERE (1=1");
+		sql.append("SELECT * FROM tb_research WHERE (1!=1");
 		if(steacherId != null && steacherId.length() > 5){
 			sql.append(" OR ").append("teacher_id = ?");
 			params.add(steacherId);
@@ -144,7 +144,7 @@ public class ResearchDao implements BaseDao<Research> {
 			sql.append(" OR ").append("direction like ?");
 			params.add(sdirection+"%");
 		}
-		sql.append(") AND is_del=?");
+		sql.append(") AND is_del=0");
 		Connection connetion = DBUtil.getConnetion();
 		List<Research> result = new ArrayList<Research>();
 		PreparedStatement prepareStatement = null;

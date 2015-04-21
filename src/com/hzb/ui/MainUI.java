@@ -12,7 +12,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import com.hzb.ui.panel.CoursePanel;
+import com.hzb.ui.panel.DepartPanel;
+import com.hzb.ui.panel.ResearchPanel;
 import com.hzb.ui.panel.StaffPanel;
+import com.hzb.ui.panel.TeachInfoPanel;
 
 public class MainUI {
 
@@ -21,10 +25,18 @@ public class MainUI {
 	private JMenu helpMenu;
 	private JPanel mainPanel;
 	
+	private static CoursePanel coursePanel;
+	private static DepartPanel departPanel;
+	private static ResearchPanel researchPanel;
 	private static StaffPanel staffPanel;
-	
+	private static TeachInfoPanel teachInfoPanel;
+
 	static {
+		coursePanel = new CoursePanel();
+		departPanel = new DepartPanel();
+		researchPanel = new ResearchPanel();
 		staffPanel = new StaffPanel();
+		teachInfoPanel = new TeachInfoPanel();
 	}
 
 	/**
@@ -92,21 +104,50 @@ public class MainUI {
 			public void actionPerformed(ActionEvent e) {
 				mainPanel.repaint();
 				mainPanel.removeAll();
-				JButton button = new JButton("34342222222222222222222");
-				button.setBounds(20, 20, 93, 23);
-				mainPanel.add(button);
+				departPanel.setBounds(10, 10, 707, 477);
+				mainPanel.add(departPanel);
 				
 			}
 		});
 		mainMenu.add(departItem);
 
 		JMenuItem courseItem = new JMenuItem("课程管理");
+		courseItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainPanel.repaint();
+				mainPanel.removeAll();
+				coursePanel.setBounds(10, 10, 707, 477);
+				mainPanel.add(coursePanel);
+			}
+		});
 		mainMenu.add(courseItem);
 
 		JMenuItem teachItem = new JMenuItem("教学管理");
+		teachItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainPanel.repaint();
+				mainPanel.removeAll();
+				teachInfoPanel.setBounds(10, 10, 707, 477);
+				mainPanel.add(teachInfoPanel);				
+			}
+		});
 		mainMenu.add(teachItem);
 
 		JMenuItem reseachItem = new JMenuItem("科研管理");
+		reseachItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainPanel.repaint();
+				mainPanel.removeAll();
+				researchPanel.setBounds(10, 10, 707, 477);
+				mainPanel.add(researchPanel);		
+			}
+		});
 		mainMenu.add(reseachItem);
 
 		helpMenu = new JMenu("帮助");

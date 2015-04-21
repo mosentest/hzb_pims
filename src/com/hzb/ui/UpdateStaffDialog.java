@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -28,7 +27,11 @@ import com.hzb.dao.StaffDao;
 import com.hzb.ui.panel.StaffPanel;
 import com.hzb.util.ConstantUtil;
 import com.hzb.util.ValueComparator;
-
+/**
+ * 新增/修改员工对话框
+ * @author 
+ *
+ */
 public class UpdateStaffDialog extends JDialog {
 	
 	private final JPanel contentPanel = new JPanel();
@@ -65,6 +68,9 @@ public class UpdateStaffDialog extends JDialog {
 		contentPanel.add(label);
 		
 		staffIdTextField = new TextField();
+		if(this.staffId !=null){
+			staffIdTextField.setEditable(false);
+		}
 		staffIdTextField.setBounds(98, 10, 230, 23);
 		contentPanel.add(staffIdTextField);
 		
@@ -129,6 +135,9 @@ public class UpdateStaffDialog extends JDialog {
 		contentPanel.add(rewardsPunishmentTextArea);
 		
 		stateChoice = new Choice();
+		if(this.staffId == null){
+			stateChoice.setEnabled(false);
+		}
 		List<Entry<String, Integer>> stateList = new ArrayList<Entry<String, Integer>>();
 		stateList.addAll(ConstantUtil.stateMap.entrySet());
 		Collections.sort(stateList,new ValueComparator());
@@ -262,9 +271,11 @@ public class UpdateStaffDialog extends JDialog {
 							msg+="\r\n职务不能为空\r";
 							flag = true;
 						}
-						if(statevalue == -1){
-							msg+="\r\n请选择状态\r";
-							flag = true;
+						if(UpdateStaffDialog.this.staffId !=null){
+							if(statevalue == -1){
+								msg+="\r\n请选择状态\r";
+								flag = true;
+							}
 						}
 						if(flag){
 							JOptionPane.showMessageDialog(null,msg,ConstantUtil.TIP,JOptionPane.INFORMATION_MESSAGE);
