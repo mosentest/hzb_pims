@@ -55,7 +55,7 @@ public class ResearchDao implements BaseDao<Research> {
 		int result = -1;
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE tb_research SET ");
-		sql.append("teacher_id=?,direction=?,situation=?,patent=?,other=?,id_del=? ");
+		sql.append("teacher_id=?,direction=?,situation=?,patent=?,other=?,is_del=? ");
 		sql.append("WHERE id=?");
 		Connection connetion = DBUtil.getConnetion();
 		PreparedStatement prepareStatement = null;
@@ -135,8 +135,8 @@ public class ResearchDao implements BaseDao<Research> {
 //		String sql2 = "SELECT * FROM tb_research WHERE is_del=0";
 		StringBuffer sql = new StringBuffer();
 		List<String> params = new ArrayList<String>();
-		sql.append("SELECT * FROM tb_research WHERE (1!=1");
-		if(steacherId != null && steacherId.length() > 5){
+		sql.append("SELECT * FROM tb_research WHERE (1!=1 ");
+		if(steacherId != null && steacherId.length() > 5 && !"--请选择--".equals(steacherId)){
 			sql.append(" OR ").append("teacher_id = ?");
 			params.add(steacherId);
 		}
@@ -195,6 +195,7 @@ public class ResearchDao implements BaseDao<Research> {
 		Research research = null;
 		try {
 			prepareStatement = connetion.prepareStatement(sql);
+			prepareStatement.setInt(1, id);
 			ResultSet executeQuery = prepareStatement.executeQuery();
 			while(executeQuery.next()){
 				String teacher_id = executeQuery.getString(2);

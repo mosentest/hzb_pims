@@ -149,7 +149,8 @@ public class UpdateTeachInfoDialog extends JDialog {
 				if(!"--请选择--".equals(staffSelectedItem)){
 					Staff findOne = staffDao.findOne(staffSelectedItem);
 					nameTextField.setText(findOne.getName());
-
+				}else{
+					nameTextField.setText("");
 				}
 			}
 		});
@@ -166,6 +167,11 @@ public class UpdateTeachInfoDialog extends JDialog {
 					hoursTextField.setText(findOne.getHours());
 					creditTextField.setText(findOne.getCredit());
 					natureTextField.setText(findOne.getNature());
+				}else{
+					sourseNameTextField.setText("");
+					hoursTextField.setText("");
+					creditTextField.setText("");
+					natureTextField.setText("");
 				}
 			}
 		});
@@ -181,6 +187,7 @@ public class UpdateTeachInfoDialog extends JDialog {
 			}
 			// 需要加1
 			staffIdChoice.select(staffFlag + 1);
+			
 			int courseFlag = -1;
 			for (int i = 0; i < courses.size(); i++) {
 				if(findTeachInfoOne.getCourse().getCourse_id().equals(courses.get(i).getCourse_id())){
