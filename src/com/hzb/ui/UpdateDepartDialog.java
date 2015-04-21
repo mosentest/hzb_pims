@@ -85,8 +85,8 @@ public class UpdateDepartDialog extends JDialog {
 						
 						boolean flag = false;
 						String msg="";
-						if("".equals(id) || id==null){
-							msg+="\r\n部门编号不能为空\r";
+						if(!ConstantUtil.checkId(id)){
+							msg+="\r\n部门编号格式不正确（长度为5，第一个必须是字母/数字）\r";
 							flag = true;
 						}
 						if("".equals(name) || name == null){

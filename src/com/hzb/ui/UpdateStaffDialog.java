@@ -239,8 +239,8 @@ public class UpdateStaffDialog extends JDialog {
 						
 						boolean flag = false;
 						String msg="";
-						if("".equals(staffIdTextField.getText().trim())){
-							msg+="\r\n员工编号不能为空\r";
+						if(!ConstantUtil.checkId(staffIdTextField.getText().trim())){
+							msg+="\r\n员工编号格式不正确（长度为5，第一个必须是字母/数字）\r";
 							flag = true;
 						}
 						if("".equals(nameTextField.getText().trim())){

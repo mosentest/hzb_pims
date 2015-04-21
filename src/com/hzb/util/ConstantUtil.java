@@ -91,4 +91,13 @@ public class ConstantUtil {
 		return isNum;
 	}
 	
+	public static boolean checkId(String id) {
+		boolean matches = id.matches("^[a-zA-Z1-9]{1}+[0-9]{4,}+$");
+		return matches;
+	}
+	
+//	public static void main(String[] args) {
+//		boolean checkId = checkId("156");
+//		System.out.println(checkId);
+//	}
 }
