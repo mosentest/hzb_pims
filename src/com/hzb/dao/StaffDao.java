@@ -60,7 +60,7 @@ public class StaffDao implements BaseDao<Staff>{
 		int result = -1;
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE tb_staff SET ");
-		sql.append("staff_id=?,name=?,sex=?,educational=?,depart_id=?,college=?,health=?,job_name=?,position=?,rewards_punishment=?,state=?,is_del=?");
+		sql.append("staff_id=?,name=?,sex=?,educational=?,depart_id=?,college=?,health=?,job_name=?,position=?,rewards_punishment=?,state=?,is_del=? ");
 		sql.append("WHERE id=?");
 		Connection connetion = DBUtil.getConnetion();
 		PreparedStatement prepareStatement = null;
@@ -250,26 +250,26 @@ public class StaffDao implements BaseDao<Staff>{
 	 * @param sjobName 职称
 	 * @return
 	 */
-	public List<Staff> findAll(String sstaffId,String sname,Integer ssex,Integer sdepartId,String sjobName) {
+	public List<Staff> findAll(String sstaffId,String sname,Integer ssex,String sdepartId,String sjobName) {
 //		String sql2 ="SELECT * FROM tb_staff WHERE 1=1 AND state=0 AND is_del=0 AND (staff_id=? OR name like '?%' OR sex=? OR depart_id=? OR job_name like '?%')";
 		StringBuffer sql = new StringBuffer();
 		List<Object> params = new ArrayList<Object>();
-		sql.append("SELECT * FROM tb_staff ");
-		sql.append("WHERE (1=1 ");
+		sql.append(" SELECT * FROM tb_staff ");
+		sql.append(" WHERE (1!=1 ");
 		if(sstaffId != null && sstaffId.length() > 5){
 			//员工编号要大于5个长度
-			sql.append(" OR ").append(" staff_id = ? ");
+			sql.append(" OR ").append(" staff_id = ?  ");
 			params.add(sstaffId);
 		}
 		if(sname != null && !"".equals(sname)){
 			sql.append(" OR ").append(" name LIKE ? ");
 			params.add(sname + "%");
 		}
-		if(ssex != null && ssex>=0){
+		if(ssex != null && ssex >= 0){
 			sql.append(" OR ").append(" sex = ? ");
 			params.add(ssex);
 		}
-		if(sdepartId != null && sdepartId>=0){
+		if(!"--请选择--".equals(sdepartId) && sdepartId!=null){
 			sql.append(" OR ").append(" depart_id = ? ");
 			params.add(sdepartId);
 		}
@@ -277,7 +277,7 @@ public class StaffDao implements BaseDao<Staff>{
 			sql.append(" OR ").append(" job_name LIKE ? ");
 			params.add(sjobName + "%");
 		}
-		sql.append(" ) AND state = 0 AND is_del = 0");
+		sql.append(" ) AND state = 0 AND is_del = 0 ");
 		Connection connetion = DBUtil.getConnetion();
 		List<Staff> result = new ArrayList<Staff>();
 		PreparedStatement prepareStatement = null;

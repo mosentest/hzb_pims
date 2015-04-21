@@ -1,13 +1,17 @@
 package com.hzb.ui.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 import com.hzb.bean.Staff;
 import com.hzb.dao.DepartDao;
+import com.hzb.util.ConstantUtil;
 
 public class StaffTableModel extends AbstractTableModel {
 
@@ -40,6 +44,7 @@ public class StaffTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Staff staff = staffs.get(rowIndex);
+		Set<Entry<String, Integer>> entrySet = ConstantUtil.eduMap.entrySet();
 		switch (columnIndex) {
 		case 0:
 			return staff.getStaffId();
@@ -48,7 +53,7 @@ public class StaffTableModel extends AbstractTableModel {
 		case 2:
 			return staff.getSex() == 0 ? "男":"女";
 		case 3:
-			return staff.getEducation();
+			return  ConstantUtil.getKey(ConstantUtil.eduMap, staff.getEducation());
 		case 4:
 			return dao.findOne(staff.getDepart().getDepartId()).getDepartName();
 		case 5:

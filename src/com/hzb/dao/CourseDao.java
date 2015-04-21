@@ -59,7 +59,7 @@ public class CourseDao implements BaseDao<Course> {
 	@Override
 	public int update(Course entity) {
 		int result = -1;
-		String sql ="UPDATE tb_course SET course_id=?, name=?, hours=?, credit=?, nature=?, id_del=? WHERE id=?";
+		String sql ="UPDATE tb_course SET course_id=?, name=?, hours=?, credit=?, nature=?, id_del=? WHERE id=? ";
 		Connection connetion = DBUtil.getConnetion();
 		PreparedStatement prepareStatement = null;
 		try {

@@ -1,32 +1,17 @@
 package com.hzb.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Choice;
-import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Label;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
-import com.hzb.bean.Depart;
-import com.hzb.bean.Staff;
-import com.hzb.dao.DepartDao;
-import com.hzb.dao.StaffDao;
-import com.hzb.ui.model.StaffTableModel;
 import com.hzb.ui.panel.StaffPanel;
 
 public class MainUI {
@@ -71,7 +56,7 @@ public class MainUI {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("人事信息管理系统——软工2班黄志彬");
-		frame.setBounds(400, 250, 737, 507);
+		frame.setBounds(400, 200, 737, 507);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();

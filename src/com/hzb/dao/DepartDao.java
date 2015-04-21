@@ -52,7 +52,7 @@ public class DepartDao implements BaseDao<Depart> {
 		int result = -1;
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE tb_depart SET ");
-		sql.append("depart_id=?,depart_name=?,is_del=?");
+		sql.append("depart_id=?,depart_name=?,is_del=? ");
 		sql.append("WHERE id=?");
 		Connection connetion = DBUtil.getConnetion();
 		PreparedStatement prepareStatement = null;

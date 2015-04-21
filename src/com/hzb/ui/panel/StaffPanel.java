@@ -21,6 +21,7 @@ import com.hzb.dao.DepartDao;
 import com.hzb.dao.StaffDao;
 import com.hzb.ui.UpdateStaffDialog;
 import com.hzb.ui.model.StaffTableModel;
+import com.hzb.util.ConstantUtil;
 
 public class StaffPanel extends JPanel {
 	
@@ -91,9 +92,19 @@ public class StaffPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int selectedRow = staffTable.getSelectedRow();
-				Object valueAt = staffTable.getValueAt(selectedRow, 0);
-				System.out.println(valueAt);
+				String depart = departChoice.getSelectedItem();
+				String sex = sexChoice.getSelectedItem();
+				int sexvalue = ConstantUtil.getValue(ConstantUtil.sexMap, sex);
+				String depart_id = null;
+				List<Depart> resultDeparts = departDao.findAll();
+				for(int i=0;i<resultDeparts.size();i++){
+					if(depart.equals(resultDeparts.get(i).getDepartName())){
+						depart_id = resultDeparts.get(i).getDepartId();
+					}
+				}
+				List<Staff> findAll = staffDao.findAll(staffIdTextField.getText().trim(), staffNametextField.getText().trim(), sexvalue, depart_id, jobNameTextField.getText().trim());
+				//重新刷新
+				udpate(findAll);
 			}
 		});
 		add(searchButton);
@@ -101,6 +112,8 @@ public class StaffPanel extends JPanel {
 		Button searchAllButton = new Button("查询全部");
 		searchAllButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//重新刷新
+				udpate(staffDao.findAll());
 			}
 		});
 		searchAllButton.setBounds(76, 96, 76, 23);
@@ -108,6 +121,15 @@ public class StaffPanel extends JPanel {
 		
 		Button addButton = new Button("添加员工");
 		addButton.setBounds(170, 96, 76, 23);
+		addButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				UpdateStaffDialog dialog = new UpdateStaffDialog("添加员工",null);
+				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);
+			}
+		});
 		add(addButton);
 		
 		Button updateButton = new Button("修改员工");
@@ -131,13 +153,34 @@ public class StaffPanel extends JPanel {
 		
 		Button deleteButton = new Button("删除员工");
 		deleteButton.setBounds(361, 96, 76, 23);
+		deleteButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow = staffTable.getSelectedRow();
+				if(selectedRow == -1){
+					JOptionPane.showMessageDialog(null,"请选中表格其中一行","提示",JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+				int showConfirmDialog = JOptionPane.showConfirmDialog(null, "确定删除？",ConstantUtil.TIP,JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+				if(showConfirmDialog ==JOptionPane.YES_OPTION){
+					Object valueAt = staffTable.getValueAt(selectedRow, 0);
+					Staff findOne = staffDao.findOne((String)valueAt);
+					//设置为1就表示表示删除，并不是物理删除
+					findOne.setIsDel(1);
+					staffDao.update(findOne);
+					//重新刷新
+					udpate(staffDao.findAll());
+				}
+			}
+		});
 		add(deleteButton);
 		
 		sexChoice = new Choice();
 		sexChoice.add("--请选择--");
 		sexChoice.add("男");
 		sexChoice.add("女");
-		sexChoice.setBounds(491, 12, 55, 21);
+		sexChoice.setBounds(491, 12, 80, 21);
 		add(sexChoice);
 		
 		departChoice = new Choice();
@@ -160,5 +203,9 @@ public class StaffPanel extends JPanel {
 		panel_1.add(scrollPane);
 		
 		add(panel_1);
+	}
+	
+	public static void udpate(List<Staff> staffs){
+		model.setStaffs(staffs);
 	}
 }
