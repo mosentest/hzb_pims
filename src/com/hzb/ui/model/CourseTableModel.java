@@ -42,9 +42,9 @@ public class CourseTableModel extends AbstractTableModel {
 		case 1:
 			return course.getName();
 		case 2:
-			return course.getHours();
+			return course.getHours() + "小时";
 		case 3:
-			return course.getCredit();
+			return course.getCredit() + "学分";
 		case 4:
 			return course.getNature();
 		}

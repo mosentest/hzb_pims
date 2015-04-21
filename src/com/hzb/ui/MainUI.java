@@ -67,7 +67,7 @@ public class MainUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("人事信息管理系统——软工2班黄志彬");
+		frame.setTitle("人事信息管理系统");
 		frame.setBounds(400, 200, 737, 507);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

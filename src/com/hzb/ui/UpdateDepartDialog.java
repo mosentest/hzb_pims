@@ -39,7 +39,7 @@ public class UpdateDepartDialog extends JDialog {
 	 */
 	public UpdateDepartDialog(String title,String id) {
 		this.id= id;
-		getContentPane().setName(title);
+		setTitle(title);
 		setBounds(400, 200, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(null);

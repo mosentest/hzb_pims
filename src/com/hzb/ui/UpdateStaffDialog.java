@@ -56,7 +56,7 @@ public class UpdateStaffDialog extends JDialog {
 	 */
 	public UpdateStaffDialog(String title,String staffId) {
 		this.staffId = staffId;
-		getContentPane().setName(title);
+		setTitle(title);
 		setBounds(400, 200, 450, 476);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(null);

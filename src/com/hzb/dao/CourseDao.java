@@ -225,13 +225,13 @@ public class CourseDao implements BaseDao<Course> {
 	 */
 	public int saveTeachInfo(TeachInfo entity){
 		int result = -1;
-		String sql ="INSERT INTO tb_teach_info(teacher_id,course_id) VALUE(?,?)";
+		String sql ="INSERT INTO tb_teach_info(teacher_id,course_id) VALUES(?,?)";
 		Connection connetion = DBUtil.getConnetion();
 		PreparedStatement prepareStatement = null;
 		try {
 			prepareStatement = connetion.prepareStatement(sql);
-			prepareStatement.setString(1, entity.getStaff().getStaffId());
-			prepareStatement.setString(2, entity.getCourse().getCourse_id());
+			prepareStatement.setString(1, entity.getTeacherId());
+			prepareStatement.setString(2, entity.getCourseId());
 			result = prepareStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(CourseDao.class.getName()+ConstantUtil.SAVE_FAILURE);
@@ -345,15 +345,16 @@ public class CourseDao implements BaseDao<Course> {
 		return result;
 	}
 	
-	public Staff findTeachInfoOne(int id) {
+	public TeachInfo findTeachInfoOne(int id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT s.staff_id,s.name,c.name,c.hours,c.credit,c.nature FROM tb_course c ");
+		sql.append("SELECT s.staff_id,s.name,c.course_id,c.name,c.hours,c.credit,c.nature FROM tb_course c ");
 		sql.append("JOIN tb_teach_info ti ON c.course_id=ti.course_id AND c.is_del=0 ");
 		sql.append("JOIN tb_staff s ON s.staff_id=ti.teacher_id AND s.is_del=0 ");
 		sql.append("WHERE ti.id=? ");
 		Connection connetion = DBUtil.getConnetion();
 		PreparedStatement prepareStatement = null;
 		Staff staff = null;
+		TeachInfo teachInfo = null;
 		try {
 			prepareStatement = connetion.prepareStatement(sql.toString());
 			prepareStatement.setInt(id, 1);
@@ -362,14 +363,16 @@ public class CourseDao implements BaseDao<Course> {
 				String staff_id = executeQuery.getString(1);
 				String staff_name = executeQuery.getString(2);
 				String course_name = executeQuery.getString(3);
-				String course_hours = executeQuery.getString(4);
-				String course_credit = executeQuery.getString(5);
-				String course_nature = executeQuery.getString(6);
-				TeachInfo teachInfo = new TeachInfo();
+				String course_id = executeQuery.getString(4);
+				String course_hours = executeQuery.getString(5);
+				String course_credit = executeQuery.getString(6);
+				String course_nature = executeQuery.getString(7);
+				teachInfo = new TeachInfo();
 				staff = new Staff();
 				staff.setStaffId(staff_id);
 				staff.setName(staff_name);
 				Course course = new Course();
+				course.setCourse_id(course_id);
 				course.setName(course_name);
 				course.setHours(course_hours);
 				course.setCredit(course_credit);
@@ -396,7 +399,7 @@ public class CourseDao implements BaseDao<Course> {
 				}
 			}
 		}
-		return staff;
+		return teachInfo;
 	}
 	
 	

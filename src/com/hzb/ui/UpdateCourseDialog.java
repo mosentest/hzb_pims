@@ -28,9 +28,9 @@ public class UpdateCourseDialog extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private String id;
 	private CourseDao dao = new CourseDao();
+	private Course findOne;
 	private TextField idTextField;
 	private TextField nameTextField;
-	private Course findOne;
 	private TextField hoursTextField;
 	private TextField creditTextField;
 	private TextField natureTextField;
@@ -40,7 +40,7 @@ public class UpdateCourseDialog extends JDialog {
 	 */
 	public UpdateCourseDialog(String title,String id) {
 		this.id= id;
-		getContentPane().setName(title);
+		setTitle(title);
 		setBounds(400, 200, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(null);

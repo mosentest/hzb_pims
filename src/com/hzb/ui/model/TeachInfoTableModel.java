@@ -44,7 +44,7 @@ public class TeachInfoTableModel extends AbstractTableModel {
 		Course course = teachInfo.getCourse();
 		switch (columnIndex) {
 		case 0:
-			return teachInfo.getId();
+			return rowIndex+1;
 		case 1:
 			return staff.getStaffId();
 		case 2:
